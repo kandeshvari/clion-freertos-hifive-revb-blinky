@@ -1,0 +1,106 @@
+add_library(metal-lib STATIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/nanosleep.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/crt0.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/synchronize_harts.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_access.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_chdir.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_chmod.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_chown.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_close.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_execve.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_exit.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_faccessat.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_fork.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_fstat.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_fstatat.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_ftime.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_getcwd.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_getpid.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_gettimeofday.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_isatty.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_kill.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_link.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_lseek.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_lstat.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_open.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_openat.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_read.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_sbrk.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_stat.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_sysconf.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_times.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_unlink.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_utime.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_wait.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/gloss/sys_write.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/fixed-clock.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/fixed-factor-clock.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/inline.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/riscv_clint0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/riscv_cpu.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/riscv_plic0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_ccache0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_clic0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_fe310-g000_hfrosc.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_fe310-g000_hfxosc.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_fe310-g000_lfrosc.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_fe310-g000_pll.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_fe310-g000_prci.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_fu540-c000_l2.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_global-external-interrupts0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_gpio-buttons.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_gpio-leds.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_gpio-switches.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_gpio0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_local-external-interrupts0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_rtc0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_spi0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_test0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_trace.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_uart0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/drivers/sifive_wdog0.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/button.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/cache.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/clock.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/cpu.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/entry.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/gpio.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/interrupt.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/led.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/lock.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/memory.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/pmp.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/privilege.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/rtc.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/shutdown.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/spi.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/switch.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/synchronize_harts.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/time.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/timer.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/trap.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/tty.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/uart.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/vector.S
+        )
+
+target_include_directories(metal-lib
+        PUBLIC
+        ./
+        ../bsp/install/include
+        )
+
+target_compile_options(metal-lib
+        PRIVATE
+        -O0 -g3 -Wall -Wextra -c -fmessage-length=0
+        -march=rv32imac -mabi=ilp32 -mcmodel=medlow
+        -ffunction-sections -fdata-sections --specs=nano.specs -Wno-unused-parameter
+        )
+
+target_link_options(metal-lib
+        PRIVATE
+        -march=rv32imac
+        -mabi=ilp32
+        -mcmodel=medlow
+        -T${CMAKE_CURRENT_SOURCE_DIR}/bsp/metal.default.lds
+        )
