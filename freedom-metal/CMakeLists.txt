@@ -92,7 +92,7 @@ target_include_directories(metal-lib
 
 target_compile_options(metal-lib
         PRIVATE
-        -O0 -g3 -Wall -Wextra -c -fmessage-length=0
+        -O3 -Wall -Wextra -c -fmessage-length=0
         -march=rv32imac -mabi=ilp32 -mcmodel=medlow
         -ffunction-sections -fdata-sections --specs=nano.specs -Wno-unused-parameter
         )
@@ -103,4 +103,12 @@ target_link_options(metal-lib
         -mabi=ilp32
         -mcmodel=medlow
         -T${CMAKE_CURRENT_SOURCE_DIR}/bsp/metal.default.lds
+
+        -nostartfiles
+        -Xlinker
+        --gc-sections
+        -Wl,-Map,RTOSDemo.map
+        -Wl,--start-group
+        -Wl,--end-group
+        --specs=nano.specs
         )
